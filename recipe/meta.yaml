@@ -1,0 +1,48 @@
+{% set name = "python-ffmpeg" %}
+{% set version = "2.0.4" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 4d5275a58da2a82fb550acbf496ff86e76d677e06b781baeefbe05a4cd47ab50
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - wheel
+  run:
+    - python
+    - pyee
+    - typing_extensions
+
+test:
+  requires:
+    - pip
+  imports:
+    - ffmpeg
+  commands:
+    - pip check
+
+about:
+  home: https://github.com/jonghwanhyeon/python-ffmpeg
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: |
+    A python binding for FFmpeg which provides sync and async APIs
+  description: |
+    A python binding for FFmpeg which provides sync and async APIs
+  doc_url: https://python-ffmpeg.readthedocs.io
+  dev_url: https://github.com/jonghwanhyeon/python-ffmpeg
+
+extra:
+  recipe-maintainers:
+    - lorepirri
