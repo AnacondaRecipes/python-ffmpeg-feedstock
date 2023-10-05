@@ -6,6 +6,9 @@ package:
   version: "{{ version }}"
 
 source:
+  # Source from GH archive because additional test files are missing in
+  # the tarballs of the source distribution.
+  # Check this PR: https://github.com/jonghwanhyeon/python-ffmpeg/pull/37
   url: "https://github.com/jonghwanhyeon/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz"
   sha256: a7977cc3d8658f94a33cd15c5710e008c9e5442df32f57e7df8cbb4ad38a97f3
 
@@ -31,6 +34,7 @@ test:
   requires:
     - pip
     - pytest
+    - pytest-asyncio
   imports:
     - ffmpeg
   source_files:
