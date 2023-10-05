@@ -10,6 +10,8 @@ source:
   sha256: 4d5275a58da2a82fb550acbf496ff86e76d677e06b781baeefbe05a4cd47ab50
 
 build:
+  # ffmpeg is not available for s390x
+  skip: true  # [s390x]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
@@ -23,6 +25,7 @@ requirements:
     - python
     - pyee
     - typing_extensions
+    - ffmpeg
 
 test:
   requires:
