@@ -6,8 +6,8 @@ package:
   version: "{{ version }}"
 
 source:
-  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
-  sha256: 4d5275a58da2a82fb550acbf496ff86e76d677e06b781baeefbe05a4cd47ab50
+  url: "https://github.com/jonghwanhyeon/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz"
+  sha256: a7977cc3d8658f94a33cd15c5710e008c9e5442df32f57e7df8cbb4ad38a97f3
 
 build:
   # ffmpeg is not available for s390x
@@ -30,10 +30,14 @@ requirements:
 test:
   requires:
     - pip
+    - pytest
   imports:
     - ffmpeg
+  source_files:
+    - tests
   commands:
     - pip check
+    - pytest -v tests
 
 about:
   home: https://github.com/jonghwanhyeon/python-ffmpeg
