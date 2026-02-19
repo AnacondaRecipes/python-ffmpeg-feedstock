@@ -1,22 +1,18 @@
 {% set name = "python-ffmpeg" %}
-{% set version = "2.0.4" %}
+{% set version = "2.0.12" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  # Source from GH archive because additional test files are missing in
-  # the tarballs of the source distribution.
-  # Check this PR: https://github.com/jonghwanhyeon/python-ffmpeg/pull/37
-  url: https://github.com/jonghwanhyeon/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: a7977cc3d8658f94a33cd15c5710e008c9e5442df32f57e7df8cbb4ad38a97f3
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
+  sha256: 19ac80af5a064a2f53c245af1a909b2d7648ea045500d96d3bcd507b88d43dc7
 
 build:
-  # ffmpeg is not available for s390x
-  skip: true  # [s390x]
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  skip: true  # [py<37]
 
 requirements:
   host:
@@ -31,10 +27,6 @@ requirements:
     - ffmpeg
 
 test:
-  requires:
-    - pip
-    - pytest
-    - pytest-asyncio
   imports:
     - ffmpeg
   source_files:
@@ -42,6 +34,10 @@ test:
   commands:
     - pip check
     - pytest -v tests
+  requires:
+    - pip
+    - pytest
+    - pytest-asyncio
 
 about:
   home: https://github.com/jonghwanhyeon/python-ffmpeg
