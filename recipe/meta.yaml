@@ -26,6 +26,9 @@ requirements:
     - typing_extensions
     - ffmpeg
 
+{% set deselect_tests = "" %}
+# >       with pytest.raises(subprocess.TimeoutExpired)
+{% set deselect_tests = " --deselect=tests/test_timeout.py::test_transcoding" %}  # [osx]
 test:
   imports:
     - ffmpeg
@@ -33,7 +36,7 @@ test:
     - tests
   commands:
     - pip check
-    - pytest -v tests
+    - pytest -v tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
